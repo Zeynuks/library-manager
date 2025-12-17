@@ -35,8 +35,6 @@ namespace Application.Services.AuthService
                 new( "IsBlocked", user.IsBlocked.ToString() )
             ];
 
-            throw new DomainNotFoundException( user.Role.ToString() );
-
             return new ClaimsPrincipal( new ClaimsIdentity( claims, "LibraryCookie" ) );
         }
     }
