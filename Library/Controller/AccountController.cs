@@ -1,11 +1,9 @@
 using Application.DTOs;
-using Application.Services.UserService;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using Application.Services.AuthService;
-using Domain.Entities;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace Library.Controller

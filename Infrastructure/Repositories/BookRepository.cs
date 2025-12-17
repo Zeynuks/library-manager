@@ -1,8 +1,5 @@
 using Domain.Entities;
 using Domain.Repositories;
-using Infrastructure.Foundation;
-using Infrastructure.Foundation.Database;
-using Infrastructure.Foundation.Database.Specification;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repositories
