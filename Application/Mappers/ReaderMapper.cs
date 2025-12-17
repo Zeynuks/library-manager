@@ -38,7 +38,7 @@ namespace Application.Mappers
                 reader.LastName,
                 reader.Address,
                 reader.PhoneNumber,
-                reader.Rentals.Select( RentalMapper.ToDto ).ToArray()
+                reader.Rentals.Select( RentalMapper.ToWithBookDto ).ToArray()
             );
         }
     }

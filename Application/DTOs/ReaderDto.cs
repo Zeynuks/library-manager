@@ -98,7 +98,7 @@ namespace Application.DTOs
         public int Id { get; set; }
 
         [Required]
-        public RentalDto[] Rentals { get; init; }
+        public RentalWithBookDto[] Rentals { get; init; }
 
         public ReaderWithRentalsDto(
             int id,
@@ -107,7 +107,7 @@ namespace Application.DTOs
             string lastName,
             string address,
             string phoneNumber,
-            RentalDto[] rentals )
+            RentalWithBookDto[] rentals )
             : base( firstName, middleName, lastName, address, phoneNumber )
         {
             Id = id;

@@ -25,6 +25,17 @@ namespace Application.Mappers
                 ReaderMapper.ToDto( rental.Reader )
             );
         }
+        
+        public static RentalWithBookDto ToWithBookDto( Rental rental )
+        {
+            return new RentalWithBookDto(
+                rental.IssueDate,
+                rental.ExpectedReturnDate,
+                rental.RentalAmount,
+                rental.ActualReturnDate,
+                BookMapper.ToDto( rental.Book )
+            );
+        }
 
         public static RentalFullDto ToFullDto( Rental rental )
         {
