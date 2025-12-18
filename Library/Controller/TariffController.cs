@@ -27,7 +27,7 @@ namespace Library.Controller
         /// <param name="id">Идентификатор тарифа.</param>
         /// <returns>Объект тарифа.</returns>
         [HttpGet( "{id:int}" )]
-        [Authorize(Roles = "Administrator,Manager,Operator")]
+        [Authorize( Roles = "Administrator,Manager,Operator" )]
         [SwaggerOperation( OperationId = "TariffGetById", Summary = "Получить тариф по Id" )]
         public async Task<IActionResult> GetById( int id )
         {
@@ -40,7 +40,7 @@ namespace Library.Controller
         /// </summary>
         /// <returns>Список тарифов.</returns>
         [HttpGet]
-        [Authorize(Roles = "Administrator,Manager,Operator")]
+        [Authorize( Roles = "Administrator,Manager,Operator" )]
         [SwaggerOperation( OperationId = "TariffGetList", Summary = "Список тарифов" )]
         public async Task<IActionResult> GetList()
         {
@@ -54,7 +54,7 @@ namespace Library.Controller
         /// <param name="dto">Данные для создания тарифа.</param>
         /// <returns>Созданный тариф.</returns>
         [HttpPost]
-        [Authorize(Roles = "Manager")]
+        [Authorize( Roles = "Manager" )]
         [SwaggerOperation( OperationId = "TariffCreate", Summary = "Создать тариф" )]
         public async Task<IActionResult> Create( [FromBody] TariffCreateDto dto )
         {
@@ -73,7 +73,7 @@ namespace Library.Controller
         /// <param name="dto">Новые данные тарифа.</param>
         /// <returns>Код 204 при успешном обновлении.</returns>
         [HttpPut( "{id:int}" )]
-        [Authorize(Roles = "Manager")]
+        [Authorize( Roles = "Manager" )]
         [SwaggerOperation( OperationId = "TariffUpdate", Summary = "Обновить тариф" )]
         public async Task<IActionResult> Update( int id, [FromBody] TariffUpdateDto dto )
         {
@@ -87,7 +87,7 @@ namespace Library.Controller
         /// <param name="id">Идентификатор тарифа.</param>
         /// <returns>Код 204 при успешном удалении.</returns>
         [HttpDelete( "{id:int}" )]
-        [Authorize(Roles = "Manager")]
+        [Authorize( Roles = "Manager" )]
         [SwaggerOperation( OperationId = "TariffDelete", Summary = "Удалить тариф" )]
         public async Task<IActionResult> Delete( int id )
         {

@@ -22,14 +22,6 @@ namespace Infrastructure.Repositories
                 .FirstOrDefaultAsync( r => r.Id == id );
         }
 
-        public async Task<IReadOnlyList<Rental>> GetByReader( int readerId )
-        {
-            return await _dbContext.Rentals
-                .AsNoTracking()
-                .Where( r => r.ReaderId == readerId )
-                .ToListAsync();
-        }
-
         public async Task<IReadOnlyList<Rental>> GetByBook( int bookId )
         {
             return await _dbContext.Rentals

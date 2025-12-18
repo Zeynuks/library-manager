@@ -27,7 +27,7 @@ namespace Library.Controller
         /// <param name="id">Идентификатор категории.</param>
         /// <returns>Объект категории читателя.</returns>
         [HttpGet( "{id:int}" )]
-        [Authorize(Roles = "Administrator,Manager,Operator")]
+        [Authorize( Roles = "Administrator,Manager,Operator" )]
         [SwaggerOperation( OperationId = "ReaderCategoryGetById", Summary = "Получить категорию читателя по Id" )]
         public async Task<IActionResult> GetById( int id )
         {
@@ -40,7 +40,7 @@ namespace Library.Controller
         /// </summary>
         /// <returns>Список категорий читателей.</returns>
         [HttpGet]
-        [Authorize(Roles = "Administrator,Manager,Operator")]
+        [Authorize( Roles = "Administrator,Manager,Operator" )]
         [SwaggerOperation( OperationId = "ReaderCategoryGetList", Summary = "Список категорий читателей" )]
         public async Task<IActionResult> GetList()
         {
@@ -54,7 +54,7 @@ namespace Library.Controller
         /// <param name="dto">Данные для создания категории.</param>
         /// <returns>Созданная категория читателя.</returns>
         [HttpPost]
-        [Authorize(Roles = "Manager")]
+        [Authorize( Roles = "Manager" )]
         [SwaggerOperation( OperationId = "ReaderCategoryCreate", Summary = "Создать категорию читателя" )]
         public async Task<IActionResult> Create( [FromBody] ReaderCategoryCreateDto dto )
         {
@@ -73,7 +73,7 @@ namespace Library.Controller
         /// <param name="dto">Новые данные категории.</param>
         /// <returns>Код 204 при успешном обновлении.</returns>
         [HttpPut( "{id:int}" )]
-        [Authorize(Roles = "Manager")]
+        [Authorize( Roles = "Manager" )]
         [SwaggerOperation( OperationId = "ReaderCategoryUpdate", Summary = "Обновить категорию читателя" )]
         public async Task<IActionResult> Update( int id, [FromBody] ReaderCategoryUpdateDto dto )
         {
@@ -87,7 +87,7 @@ namespace Library.Controller
         /// <param name="id">Идентификатор категории.</param>
         /// <returns>Код 204 при успешном удалении.</returns>
         [HttpDelete( "{id:int}" )]
-        [Authorize(Roles = "Manager")]
+        [Authorize( Roles = "Manager" )]
         [SwaggerOperation( OperationId = "ReaderCategoryDelete", Summary = "Удалить категорию читателя" )]
         public async Task<IActionResult> Delete( int id )
         {

@@ -27,7 +27,7 @@ namespace Library.Controller
         /// <param name="id">Идентификатор проката.</param>
         /// <returns>Объект проката книги.</returns>
         [HttpGet( "{id:int}" )]
-        [Authorize(Roles = "Administrator,Manager,Operator")]
+        [Authorize( Roles = "Administrator,Manager,Operator" )]
         [SwaggerOperation( OperationId = "RentalGetById", Summary = "Получить прокат по Id" )]
         public async Task<IActionResult> GetById( int id )
         {
@@ -40,7 +40,7 @@ namespace Library.Controller
         /// </summary>
         /// <returns>Список прокатов книг.</returns>
         [HttpGet]
-        [Authorize(Roles = "Administrator,Manager,Operator")]
+        [Authorize( Roles = "Administrator,Manager,Operator" )]
         [SwaggerOperation( OperationId = "RentalGetList", Summary = "Список прокатов" )]
         public async Task<IActionResult> GetList()
         {
@@ -54,7 +54,7 @@ namespace Library.Controller
         /// <param name="dto">Данные для создания проката.</param>
         /// <returns>Созданный прокат книги.</returns>
         [HttpPost]
-        [Authorize(Roles = "Manager")]
+        [Authorize( Roles = "Operator" )]
         [SwaggerOperation( OperationId = "RentalCreate", Summary = "Создать прокат" )]
         public async Task<IActionResult> Create( [FromBody] RentalCreateDto dto )
         {
@@ -73,7 +73,7 @@ namespace Library.Controller
         /// <param name="dto">Новые данные проката.</param>
         /// <returns>Код 204 при успешном обновлении.</returns>
         [HttpPut( "{id:int}" )]
-        [Authorize(Roles = "Manager")]
+        [Authorize( Roles = "Operator" )]
         [SwaggerOperation( OperationId = "RentalUpdate", Summary = "Обновить прокат" )]
         public async Task<IActionResult> Update( int id, [FromBody] RentalUpdateDto dto )
         {
@@ -82,12 +82,32 @@ namespace Library.Controller
         }
 
         /// <summary>
+        /// Вернуть книгу и рассчитать итоговую сумму платежа.
+        /// </summary>
+        /// <param name="id">Идентификатор проката.</param>
+        /// <param name="dto">Данные возврата книги.</param>
+        /// <returns>Сумма к оплате.</returns>
+        [HttpPost( "{id:int}/return" )]
+        [Authorize( Roles = "Operator" )]
+        [SwaggerOperation( OperationId = "RentalReturn",
+            Summary = "Вернуть книгу и рассчитать сумму платежа" )]
+        public async Task<IActionResult> ReturnBook(
+            int id,
+            [FromBody] RentalReturnDto dto )
+        {
+            decimal totalAmount =
+                await _rentalService.ReturnBook( id, dto.ActualReturnDate );
+
+            return Ok( totalAmount );
+        }
+
+        /// <summary>
         /// Удалить прокат.
         /// </summary>
         /// <param name="id">Идентификатор проката.</param>
         /// <returns>Код 204 при успешном удалении.</returns>
         [HttpDelete( "{id:int}" )]
-        [Authorize(Roles = "Manager")]
+        [Authorize( Roles = "Manager" )]
         [SwaggerOperation( OperationId = "RentalDelete", Summary = "Удалить прокат" )]
         public async Task<IActionResult> Delete( int id )
         {

@@ -56,21 +56,21 @@ namespace Library.Controller
             await HttpContext.SignOutAsync( "LibraryCookie" );
             return Ok( "Logged out successfully." );
         }
-        
+
         /// <summary>
         /// Получить информацию о текущем пользователе.
         /// </summary>
         /// <returns>Имя и роли пользователя.</returns>
-        [HttpGet("me")]
+        [HttpGet( "me" )]
         [Authorize]
-        [SwaggerOperation(OperationId = "AccountGetCurrent", Summary = "Получить текущего пользователя")]
+        [SwaggerOperation( OperationId = "AccountGetCurrent", Summary = "Получить текущего пользователя" )]
         public IActionResult GetCurrent()
         {
-            return Ok(new
+            return Ok( new
             {
                 Login = User.Identity?.Name,
-                Roles = User.Claims.Where(c => c.Type == ClaimTypes.Role).Select(c => c.Value)
-            });
+                Roles = User.Claims.Where( c => c.Type == ClaimTypes.Role ).Select( c => c.Value )
+            } );
         }
     }
 }

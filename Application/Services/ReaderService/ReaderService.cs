@@ -98,10 +98,15 @@ namespace Application.Services.ReaderService
 
         public async Task Remove( int id )
         {
-            Reader? reader = await _readerRepository.TryGet( id );
+            Reader? reader = await _readerRepository.TryGetWithRentails( id );
             if ( reader is null )
             {
                 throw new DomainNotFoundException( $"Reader with ID {id} could not be found." );
+            }
+
+            if ( reader.Rentals.Any( r => r.ActualReturnDate == null ) )
+            {
+                throw new DomainValidationException( "Reader have opened rentals." );
             }
 
             _readerRepository.Delete( reader );

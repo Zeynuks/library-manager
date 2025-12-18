@@ -101,10 +101,15 @@ namespace Application.Services.BookService
 
         public async Task Remove( int id )
         {
-            Book? book = await _bookRepository.TryGet( id );
+            Book? book = await _bookRepository.TryGetWithRentals( id );
             if ( book is null )
             {
                 throw new DomainNotFoundException( $"Book with ID {id} not be found." );
+            }
+
+            if ( book.Rentals.Any( r => r.ActualReturnDate == null ) )
+            {
+                throw new DomainValidationException( "The book cannot be deleted because it has active rentals." );
             }
 
             _bookRepository.Delete( book );

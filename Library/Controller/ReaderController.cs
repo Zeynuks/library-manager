@@ -27,7 +27,7 @@ namespace Library.Controller
         /// <param name="id">Идентификатор читателя.</param>
         /// <returns>Объект читателя.</returns>
         [HttpGet( "{id:int}" )]
-        [Authorize(Roles = "Administrator,Manager,Operator")]
+        [Authorize( Roles = "Administrator,Manager,Operator" )]
         [SwaggerOperation( OperationId = "ReaderGetById", Summary = "Получить читателя по Id" )]
         public async Task<IActionResult> GetById( int id )
         {
@@ -41,7 +41,7 @@ namespace Library.Controller
         /// <param name="id">Идентификатор читателя.</param>
         /// <returns>Список прокатов заданного читателя.</returns>
         [HttpGet( "{id:int}/rentals" )]
-        [Authorize(Roles = "Administrator,Manager,Operator")]
+        [Authorize( Roles = "Administrator,Manager,Operator" )]
         [SwaggerOperation( OperationId = "ReaderGetWithRentals", Summary = "Список прокатов по читателю" )]
         public async Task<IActionResult> GetWithRentals( int id )
         {
@@ -54,7 +54,7 @@ namespace Library.Controller
         /// </summary>
         /// <returns>Список читателей.</returns>
         [HttpGet]
-        [Authorize(Roles = "Administrator,Manager,Operator")]
+        [Authorize( Roles = "Administrator,Manager,Operator" )]
         [SwaggerOperation( OperationId = "ReaderGetList", Summary = "Список читателей" )]
         public async Task<IActionResult> GetList()
         {
@@ -69,7 +69,7 @@ namespace Library.Controller
         /// <param name="dto">Данные для создания читателя.</param>
         /// <returns>Созданный читатель.</returns>
         [HttpPost]
-        [Authorize(Roles = "Manager")]
+        [Authorize( Roles = "Operator" )]
         [SwaggerOperation( OperationId = "ReaderCreate", Summary = "Создать читателя" )]
         public async Task<IActionResult> Create( [FromBody] ReaderCreateDto dto )
         {
@@ -92,7 +92,7 @@ namespace Library.Controller
         /// <param name="dto">Новые данные читателя.</param>
         /// <returns>Код 204 при успешном обновлении.</returns>
         [HttpPut( "{id:int}" )]
-        [Authorize(Roles = "Manager")]
+        [Authorize( Roles = "Operator" )]
         [SwaggerOperation( OperationId = "ReaderUpdate", Summary = "Обновить читателя" )]
         public async Task<IActionResult> Update( int id, [FromBody] ReaderUpdateDto dto )
         {
@@ -106,7 +106,7 @@ namespace Library.Controller
         /// <param name="id">Идентификатор читателя.</param>
         /// <returns>Код 204 при успешном удалении.</returns>
         [HttpDelete( "{id:int}" )]
-        [Authorize(Roles = "Manager")]
+        [Authorize( Roles = "Operator" )]
         [SwaggerOperation( OperationId = "ReaderDelete", Summary = "Удалить читателя" )]
         public async Task<IActionResult> Delete( int id )
         {

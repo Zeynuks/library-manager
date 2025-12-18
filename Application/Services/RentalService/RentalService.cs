@@ -7,6 +7,8 @@ using Domain.Repositories;
 
 namespace Application.Services.RentalService
 {
+    //TODO Добавить логику расчета и отдельный метод предрасчёта
+    //TODO Добавить логику расчёта для штрафов + просрочка
     public class RentalService : IRentalService
     {
         private readonly IRentalRepository _rentalRepository;
@@ -72,7 +74,7 @@ namespace Application.Services.RentalService
                 dto.ReaderId,
                 dto.IssueDate,
                 dto.ExpectedReturnDate,
-                Rental.CalculateRentalAmount(
+                CalculateRentalAmount(
                     dto.IssueDate,
                     dto.ExpectedReturnDate,
                     reader.Category.DiscountRate,
@@ -104,19 +106,17 @@ namespace Application.Services.RentalService
                 throw new DomainNotFoundException( $"Rental with ID {id} could not be found." );
             }
 
-            rental.Update(
+            rental.Update( dto.ExpectedReturnDate, CalculateRentalAmount(
                 dto.IssueDate,
                 dto.ExpectedReturnDate,
-                Rental.CalculateRentalAmount(
-                    dto.IssueDate,
-                    dto.ExpectedReturnDate,
-                    reader.Category.DiscountRate,
-                    book.Tariff.DailyRate ) );
+                reader.Category.DiscountRate,
+                book.Tariff.DailyRate )
+            );
 
             await _unitOfWork.CommitAsync();
         }
 
-        public async Task ReturnBook( int id, DateOnly actualReturnDate )
+        public async Task<decimal> ReturnBook( int id, DateOnly actualReturnDate )
         {
             Rental? rental = await _rentalRepository.TryGet( id );
             if ( rental is null )
@@ -124,8 +124,23 @@ namespace Application.Services.RentalService
                 throw new DomainNotFoundException( $"Rental with ID {id} could not be found." );
             }
 
-            rental.ReturnBook( actualReturnDate );
+            Book? book = await _bookRepository.TryGet( rental.BookId );
+            if ( book is null )
+            {
+                throw new DomainNotFoundException( $"Book with ID {rental.BookId} not found." );
+            }
+
+            decimal overdueAmount = CalculateOverdueAmount(
+                rental.ExpectedReturnDate,
+                actualReturnDate,
+                book.Tariff.DailyRate );
+
+            decimal finesAmount = rental.Fines?.Sum( f => f.Amount ) ?? 0m;
+
+            rental.ReturnBook( actualReturnDate, overdueAmount + finesAmount );
             await _unitOfWork.CommitAsync();
+
+            return overdueAmount + finesAmount;
         }
 
         public async Task Remove( int id )
@@ -138,6 +153,37 @@ namespace Application.Services.RentalService
 
             _rentalRepository.Delete( rental );
             await _unitOfWork.CommitAsync();
+        }
+
+        public static decimal CalculateRentalAmount(
+            DateOnly issueDate,
+            DateOnly expectedReturnDate,
+            decimal dailyRate,
+            decimal discountRate )
+        {
+            int rentalDays = Math.Max( 1, expectedReturnDate.DayNumber - issueDate.DayNumber + 1 );
+
+            return rentalDays * dailyRate * ( 1 - discountRate );
+        }
+
+        public static decimal CalculateOverdueAmount(
+            DateOnly expectedReturnDate,
+            DateOnly actualDate,
+            decimal dailyRate )
+        {
+            if ( actualDate <= expectedReturnDate )
+            {
+                return 0m;
+            }
+
+            int overdueDays = actualDate.DayNumber - expectedReturnDate.DayNumber;
+
+            if ( overdueDays <= 0 )
+            {
+                return 0m;
+            }
+
+            return overdueDays * dailyRate;
         }
     }
 }

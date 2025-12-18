@@ -8,7 +8,7 @@ namespace Application.Services.RentalService
         Task<IReadOnlyList<RentalFullDto>> GetList();
         Task<int> Create( RentalCreateDto dto );
         Task Update( int id, RentalUpdateDto dto );
-        Task ReturnBook( int id, DateOnly actualReturnDate );
+        Task<decimal> ReturnBook( int id, DateOnly actualReturnDate );
         Task Remove( int id );
     }
 }

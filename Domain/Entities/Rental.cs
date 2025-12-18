@@ -29,23 +29,13 @@ namespace Domain.Entities
             RentalAmount = rentalAmount;
         }
 
-        public static decimal CalculateRentalAmount(
-            DateOnly issueDate,
-            DateOnly expectedReturnDate,
-            decimal dailyRate,
-            decimal discountRate )
+        public void Update( DateOnly expectedReturnDate, decimal rentalAmount )
         {
-            int rentalDays = Math.Max( 1, expectedReturnDate.DayNumber - issueDate.DayNumber + 1 );
-            return rentalDays * dailyRate * ( 1 - discountRate );
-        }
-
-        public void Update( DateOnly issueDate, DateOnly expectedReturnDate, decimal rentalAmount )
-        {
-            ExpectedReturnDate = ValidateExpectedReturnDate( issueDate, expectedReturnDate );
+            ExpectedReturnDate = ValidateExpectedReturnDate( IssueDate, expectedReturnDate );
             RentalAmount = rentalAmount;
         }
 
-        public void ReturnBook( DateOnly actualReturnDate )
+        public void ReturnBook( DateOnly actualReturnDate, decimal rentalAmount )
         {
             if ( ActualReturnDate.HasValue )
             {
@@ -53,6 +43,7 @@ namespace Domain.Entities
             }
 
             ActualReturnDate = ValidateActualReturnDate( IssueDate, actualReturnDate );
+            RentalAmount += rentalAmount;
         }
 
         private static DateOnly ValidateDate( DateOnly issueDate )

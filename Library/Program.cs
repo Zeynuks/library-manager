@@ -8,7 +8,7 @@ namespace Library
         public static void Main( string[] args )
         {
             WebApplicationBuilder builder = WebApplication.CreateBuilder( args );
-            
+
             builder.Services.AddSwaggerConfiguration();
             builder.Services.AddCustomLogging();
             builder.Services.AddCustomAuthentication();
@@ -24,7 +24,7 @@ namespace Library
             app.UseSwaggerConfiguration( app.Environment );
             app.UseAuthentication();
             app.UseAuthorization();
-            
+
             app.MapControllers();
             app.InitLibraryDatabase();
 

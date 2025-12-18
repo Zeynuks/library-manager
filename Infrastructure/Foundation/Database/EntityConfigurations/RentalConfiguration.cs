@@ -29,14 +29,6 @@ namespace Infrastructure.Foundation.Database.EntityConfigurations
 
             builder.Property( r => r.ActualReturnDate );
 
-            builder.HasIndex( r => new
-                {
-                    r.BookId,
-                    r.ReaderId,
-                    r.IssueDate
-                } )
-                .IsUnique();
-
             builder.HasOne( r => r.Book )
                 .WithMany( b => b.Rentals )
                 .HasForeignKey( r => r.BookId )

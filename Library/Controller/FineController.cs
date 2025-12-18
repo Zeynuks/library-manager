@@ -27,7 +27,7 @@ namespace Library.Controller
         /// <param name="id">Идентификатор штрафа.</param>
         /// <returns>Объект штрафа.</returns>
         [HttpGet( "{id:int}" )]
-        [Authorize(Roles = "Administrator,Manager,Operator")]
+        [Authorize( Roles = "Administrator,Manager,Operator" )]
         [SwaggerOperation( OperationId = "FineGetById", Summary = "Получить штраф по Id" )]
         public async Task<IActionResult> GetById( int id )
         {
@@ -40,7 +40,7 @@ namespace Library.Controller
         /// </summary>
         /// <returns>Список штрафов.</returns>
         [HttpGet]
-        [Authorize(Roles = "Administrator,Manager,Operator")]
+        [Authorize( Roles = "Administrator,Manager,Operator" )]
         [SwaggerOperation( OperationId = "FineGetList", Summary = "Список штрафов" )]
         public async Task<IActionResult> GetList()
         {
@@ -54,7 +54,7 @@ namespace Library.Controller
         /// <param name="dto">Данные для создания штрафа.</param>
         /// <returns>Созданный штраф.</returns>
         [HttpPost]
-        [Authorize(Roles = "Manager")]
+        [Authorize( Roles = "Manager" )]
         [SwaggerOperation( OperationId = "FineCreate", Summary = "Создать штраф" )]
         public async Task<IActionResult> Create( [FromBody] FineCreateDto dto )
         {
@@ -73,7 +73,7 @@ namespace Library.Controller
         /// <param name="dto">Новые данные штрафа.</param>
         /// <returns>Код 204 при успешном обновлении.</returns>
         [HttpPut( "{id:int}" )]
-        [Authorize(Roles = "Manager")]
+        [Authorize( Roles = "Manager" )]
         [SwaggerOperation( OperationId = "FineUpdate", Summary = "Обновить штраф" )]
         public async Task<IActionResult> Update( int id, [FromBody] FineUpdateDto dto )
         {
@@ -87,7 +87,7 @@ namespace Library.Controller
         /// <param name="id">Идентификатор штрафа.</param>
         /// <returns>Код 204 при успешном удалении.</returns>
         [HttpDelete( "{id:int}" )]
-        [Authorize(Roles = "Manager")]
+        [Authorize( Roles = "Manager" )]
         [SwaggerOperation( OperationId = "FineDelete", Summary = "Удалить штраф" )]
         public async Task<IActionResult> Delete( int id )
         {
