@@ -48,6 +48,8 @@ namespace Application.Mappers
                 rental.ExpectedReturnDate,
                 rental.RentalAmount,
                 rental.ActualReturnDate,
+                rental.BookId,
+                rental.ReaderId,
                 BookMapper.ToDto( rental.Book ),
                 ReaderMapper.ToDto( rental.Reader )
             );

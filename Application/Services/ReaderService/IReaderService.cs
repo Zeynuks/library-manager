@@ -6,7 +6,7 @@ namespace Application.Services.ReaderService
     {
         Task<ReaderWithCategoryDto> GetById( int id );
         Task<ReaderWithRentalsDto> GetWithRentals( int id );
-        Task<IReadOnlyList<ReaderDto>> GetList();
+        Task<IReadOnlyList<ReaderWithCategoryDto>> GetList();
         Task<int> Create( ReaderCreateDto dto );
         Task Update( int id, ReaderUpdateDto dto );
         Task Remove( int id );

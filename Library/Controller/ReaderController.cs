@@ -58,7 +58,7 @@ namespace Library.Controller
         [SwaggerOperation( OperationId = "ReaderGetList", Summary = "Список читателей" )]
         public async Task<IActionResult> GetList()
         {
-            IReadOnlyList<ReaderDto> list = await _readerService.GetList();
+            IReadOnlyList<ReaderWithCategoryDto> list = await _readerService.GetList();
 
             return Ok( list );
         }

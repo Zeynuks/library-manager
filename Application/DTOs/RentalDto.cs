@@ -85,6 +85,12 @@ namespace Application.DTOs
 
         [Required]
         public ReaderDto Reader { get; set; }
+        
+        [Required]
+        public int BookId { get; set; }
+
+        [Required]
+        public int ReaderId { get; set; }
 
         public RentalFullDto(
             int id,
@@ -92,9 +98,13 @@ namespace Application.DTOs
             DateOnly expectedReturnDate,
             decimal rentalAmount,
             DateOnly? actualReturnDate,
+            int bookId,
+            int readerId,
             BookDto book,
             ReaderDto reader ) : base( id, issueDate, expectedReturnDate, rentalAmount, actualReturnDate )
         {
+            BookId = bookId;
+            ReaderId = readerId;
             Book = book;
             Reader = reader;
         }

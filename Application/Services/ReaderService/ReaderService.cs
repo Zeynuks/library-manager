@@ -45,13 +45,13 @@ namespace Application.Services.ReaderService
             return ReaderMapper.ToWithRentalsDto( reader );
         }
 
-        public async Task<IReadOnlyList<ReaderDto>> GetList()
+        public async Task<IReadOnlyList<ReaderWithCategoryDto>> GetList()
         {
             IReadOnlyList<Reader> readers =
                 await _readerRepository.GetReadOnlyList();
 
             return readers
-                .Select( ReaderMapper.ToDto )
+                .Select( ReaderMapper.ToWithCategoryDto )
                 .ToList();
         }
 

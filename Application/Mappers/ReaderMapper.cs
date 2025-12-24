@@ -26,6 +26,7 @@ namespace Application.Mappers
                 reader.LastName,
                 reader.Address,
                 reader.PhoneNumber,
+                reader.CategoryId,
                 ReaderCategoryMapper.ToReadDto( reader.Category )
             );
         }

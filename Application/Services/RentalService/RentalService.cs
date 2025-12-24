@@ -166,7 +166,7 @@ namespace Application.Services.RentalService
             return rentalDays * dailyRate * ( 1 - discountRate );
         }
 
-        public static decimal CalculateOverdueAmount(
+        public decimal CalculateOverdueAmount(
             DateOnly expectedReturnDate,
             DateOnly actualDate,
             decimal dailyRate )

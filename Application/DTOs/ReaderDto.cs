@@ -79,6 +79,9 @@ namespace Application.DTOs
     public class ReaderWithCategoryDto : ReaderDto
     {
         [Required]
+        public int CategoryId { get; set; }
+        
+        [Required]
         public ReaderCategoryReadDto Category { get; set; }
 
         public ReaderWithCategoryDto(
@@ -88,9 +91,11 @@ namespace Application.DTOs
             string lastName,
             string address,
             string phoneNumber,
+            int categoryId,
             ReaderCategoryReadDto category )
             : base( id, firstName, middleName, lastName, address, phoneNumber )
         {
+            CategoryId = categoryId;
             Category = category;
         }
     }
