@@ -12,6 +12,7 @@ namespace Application.DTOs
         public string Name { get; set; }
 
         [Required]
+        [Range(0, 1)]
         public decimal DiscountRate { get; set; }
 
         public ReaderCategoryDto( int id, string name, decimal discountRate )

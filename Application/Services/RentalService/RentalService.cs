@@ -75,10 +75,11 @@ namespace Application.Services.RentalService
                 dto.IssueDate,
                 dto.ExpectedReturnDate,
                 CalculateRentalAmount(
-                    dto.IssueDate,
-                    dto.ExpectedReturnDate,
-                    reader.Category.DiscountRate,
-                    book.Tariff.DailyRate ) );
+                    issueDate: dto.IssueDate,
+                    expectedReturnDate: dto.ExpectedReturnDate,
+                    dailyRate: book.Tariff.DailyRate,
+                    discountRate: reader.Category.DiscountRate
+                ) );
 
             _rentalRepository.Add( rental );
             await _unitOfWork.CommitAsync();
@@ -107,10 +108,11 @@ namespace Application.Services.RentalService
             }
 
             rental.Update( dto.ExpectedReturnDate, CalculateRentalAmount(
-                dto.IssueDate,
-                dto.ExpectedReturnDate,
-                reader.Category.DiscountRate,
-                book.Tariff.DailyRate )
+                    issueDate: dto.IssueDate,
+                    expectedReturnDate: dto.ExpectedReturnDate,
+                    dailyRate: book.Tariff.DailyRate,
+                    discountRate: reader.Category.DiscountRate
+                )
             );
 
             await _unitOfWork.CommitAsync();
