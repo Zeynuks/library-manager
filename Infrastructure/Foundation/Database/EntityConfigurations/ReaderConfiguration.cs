@@ -35,11 +35,11 @@ namespace Infrastructure.Foundation.Database.EntityConfigurations
 
             builder.HasIndex( r => r.PhoneNumber )
                 .IsUnique();
-
-            builder.HasOne( r => r.Category )
-                .WithMany( c => c.Readers )
-                .HasForeignKey( r => r.CategoryId )
-                .OnDelete( DeleteBehavior.Restrict );
+            
+            builder.HasMany(r => r.Rentals)
+                .WithOne(rental => rental.Reader)
+                .HasForeignKey(rental => rental.ReaderId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

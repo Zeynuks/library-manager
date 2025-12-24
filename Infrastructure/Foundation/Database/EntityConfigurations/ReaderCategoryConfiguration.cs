@@ -21,6 +21,11 @@ namespace Infrastructure.Foundation.Database.EntityConfigurations
 
             builder.HasIndex( rc => rc.Name )
                 .IsUnique();
+            
+            builder.HasMany(rc => rc.Readers)
+                .WithOne(r => r.Category)
+                .HasForeignKey(r => r.CategoryId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

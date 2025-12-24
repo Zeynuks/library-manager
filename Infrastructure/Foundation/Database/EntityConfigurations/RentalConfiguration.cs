@@ -28,16 +28,11 @@ namespace Infrastructure.Foundation.Database.EntityConfigurations
                 .IsRequired();
 
             builder.Property( r => r.ActualReturnDate );
-
-            builder.HasOne( r => r.Book )
-                .WithMany( b => b.Rentals )
-                .HasForeignKey( r => r.BookId )
-                .OnDelete( DeleteBehavior.Restrict );
-
-            builder.HasOne( r => r.Reader )
-                .WithMany( rdr => rdr.Rentals )
-                .HasForeignKey( r => r.ReaderId )
-                .OnDelete( DeleteBehavior.Restrict );
+            
+            builder.HasMany(r => r.Fines)
+                .WithOne(f => f.Rental)
+                .HasForeignKey(f => f.RentalId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

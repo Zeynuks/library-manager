@@ -36,11 +36,11 @@ namespace Infrastructure.Foundation.Database.EntityConfigurations
                     b.Author
                 } )
                 .IsUnique();
-
-            builder.HasOne( b => b.Tariff )
-                .WithMany()
-                .HasForeignKey( b => b.TariffId )
-                .OnDelete( DeleteBehavior.Restrict );
+            
+            builder.HasMany(b => b.Rentals)
+                .WithOne(r => r.Book)
+                .HasForeignKey(r => r.BookId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

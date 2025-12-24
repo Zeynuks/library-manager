@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations.Migrations
 {
     [DbContext(typeof(LibraryDbContext))]
-    [Migration("20251217154633_AddRentalAmount")]
-    partial class AddRentalAmount
+    [Migration("20251224221011_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -120,7 +120,6 @@ namespace Infrastructure.Migrations.Migrations
                         .HasColumnType("varchar(100)");
 
                     b.Property<string>("MiddleName")
-                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("varchar(100)");
 
@@ -191,10 +190,9 @@ namespace Infrastructure.Migrations.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ReaderId");
+                    b.HasIndex("BookId");
 
-                    b.HasIndex("BookId", "ReaderId", "IssueDate")
-                        .IsUnique();
+                    b.HasIndex("ReaderId");
 
                     b.ToTable("Rental", (string)null);
                 });
@@ -259,9 +257,9 @@ namespace Infrastructure.Migrations.Migrations
             modelBuilder.Entity("Domain.Entities.Book", b =>
                 {
                     b.HasOne("Domain.Entities.Tariff", "Tariff")
-                        .WithMany()
+                        .WithMany("Books")
                         .HasForeignKey("TariffId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Tariff");
@@ -283,7 +281,7 @@ namespace Infrastructure.Migrations.Migrations
                     b.HasOne("Domain.Entities.ReaderCategory", "Category")
                         .WithMany("Readers")
                         .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Category");
@@ -294,13 +292,13 @@ namespace Infrastructure.Migrations.Migrations
                     b.HasOne("Domain.Entities.Book", "Book")
                         .WithMany("Rentals")
                         .HasForeignKey("BookId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Domain.Entities.Reader", "Reader")
                         .WithMany("Rentals")
                         .HasForeignKey("ReaderId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Book");
@@ -326,6 +324,11 @@ namespace Infrastructure.Migrations.Migrations
             modelBuilder.Entity("Domain.Entities.Rental", b =>
                 {
                     b.Navigation("Fines");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Tariff", b =>
+                {
+                    b.Navigation("Books");
                 });
 #pragma warning restore 612, 618
         }

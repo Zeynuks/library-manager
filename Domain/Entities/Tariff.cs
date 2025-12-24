@@ -10,6 +10,8 @@ namespace Domain.Entities
 
         //TODO Можно добавить тип, чтобы были возможности добавлять процентную скидку или статическую
         public decimal DailyRate { get; private set; }
+        
+        public virtual ICollection<Book> Books { get; private set; } = new List<Book>();
 
         public Tariff( string name, decimal dailyRate )
         {

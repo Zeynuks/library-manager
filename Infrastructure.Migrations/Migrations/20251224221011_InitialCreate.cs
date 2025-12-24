@@ -75,7 +75,7 @@ namespace Infrastructure.Migrations.Migrations
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     FirstName = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    MiddleName = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false)
+                    MiddleName = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     LastName = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
@@ -93,7 +93,7 @@ namespace Infrastructure.Migrations.Migrations
                         column: x => x.CategoryId,
                         principalTable: "ReaderCategory",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -120,7 +120,7 @@ namespace Infrastructure.Migrations.Migrations
                         column: x => x.TariffId,
                         principalTable: "Tariff",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -134,7 +134,8 @@ namespace Infrastructure.Migrations.Migrations
                     ReaderId = table.Column<int>(type: "int", nullable: false),
                     IssueDate = table.Column<DateOnly>(type: "date", nullable: false),
                     ExpectedReturnDate = table.Column<DateOnly>(type: "date", nullable: false),
-                    ActualReturnDate = table.Column<DateOnly>(type: "date", nullable: true)
+                    ActualReturnDate = table.Column<DateOnly>(type: "date", nullable: true),
+                    RentalAmount = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -144,13 +145,13 @@ namespace Infrastructure.Migrations.Migrations
                         column: x => x.BookId,
                         principalTable: "Book",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Rental_Reader_ReaderId",
                         column: x => x.ReaderId,
                         principalTable: "Reader",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -211,10 +212,9 @@ namespace Infrastructure.Migrations.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Rental_BookId_ReaderId_IssueDate",
+                name: "IX_Rental_BookId",
                 table: "Rental",
-                columns: new[] { "BookId", "ReaderId", "IssueDate" },
-                unique: true);
+                column: "BookId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Rental_ReaderId",

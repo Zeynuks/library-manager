@@ -14,6 +14,8 @@ namespace Application.DTOs
         [Required]
         [StringLength( 20 )]
         public decimal DailyRate { get; set; }
+        
+        
 
         public TariffDto( int id, string name, decimal dailyRate )
         {

@@ -21,6 +21,11 @@ namespace Infrastructure.Foundation.Database.EntityConfigurations
 
             builder.HasIndex( t => t.Name )
                 .IsUnique();
+            
+            builder.HasMany(t => t.Books)
+                .WithOne(b => b.Tariff)
+                .HasForeignKey(b => b.TariffId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }
