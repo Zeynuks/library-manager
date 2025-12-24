@@ -31,6 +31,7 @@ namespace Infrastructure.Repositories
         {
             return await _dbContext.Readers
                 .Include( r => r.Rentals )
+                .ThenInclude( r => r.Book )
                 .FirstOrDefaultAsync( r => r.Id == id );
         }
 

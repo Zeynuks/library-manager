@@ -5,6 +5,9 @@ namespace Application.DTOs
     public class BookDto
     {
         [Required]
+        public int Id { get; init; }
+        
+        [Required]
         [StringLength( 200 )]
         public string Title { get; init; }
 
@@ -18,42 +21,43 @@ namespace Application.DTOs
 
         [Required]
         public decimal Deposit { get; init; }
+        
+        [Required]
+        public int TariffId { get; init; }
 
         public BookDto(
+            int id,
             string title,
             string author,
             string genre,
-            decimal deposit )
+            decimal deposit,
+            int tariffId)
         {
+            Id = id;
             Title = title;
             Author = author;
             Genre = genre;
             Deposit = deposit;
+            TariffId = tariffId;
         }
     }
 
     public class BookCreateDto : BookDto
     {
-        [Required]
-        public int TariffId { get; init; }
-
         public BookCreateDto(
+            int id,
             string title,
             string author,
             string genre,
             decimal deposit,
             int tariffId )
-            : base( title, author, genre, deposit )
+            : base( id, title, author, genre, deposit, tariffId )
         {
-            TariffId = tariffId;
         }
     }
 
     public class BookWithTariffDto : BookDto
     {
-        [Required]
-        public int Id { get; init; }
-
         [Required]
         public TariffReadDto Tariff { get; init; }
 
@@ -63,19 +67,16 @@ namespace Application.DTOs
             string author,
             string genre,
             decimal deposit,
+            int tariffId,
             TariffReadDto tariff )
-            : base( title, author, genre, deposit )
+            : base( id, title, author, genre, deposit, tariffId )
         {
-            Id = id;
             Tariff = tariff;
         }
     }
 
     public class BookWithRentalsDto : BookDto
     {
-        [Required]
-        public int Id { get; init; }
-
         [Required]
         public RentalWithReaderDto[] Rentals { get; init; }
 
@@ -85,28 +86,25 @@ namespace Application.DTOs
             string author,
             string genre,
             decimal deposit,
+            int tariffId,
             RentalWithReaderDto[] rentals )
-            : base( title, author, genre, deposit )
+            : base( id, title, author, genre, deposit, tariffId )
         {
-            Id = id;
             Rentals = rentals;
         }
     }
 
     public class BookUpdateDto : BookDto
     {
-        [Required]
-        public int TariffId { get; init; }
-
         public BookUpdateDto(
+            int id,
             string title,
             string author,
             string genre,
             decimal deposit,
             int tariffId )
-            : base( title, author, genre, deposit )
+            : base( id, title, author, genre, deposit, tariffId )
         {
-            TariffId = tariffId;
         }
     }
 }

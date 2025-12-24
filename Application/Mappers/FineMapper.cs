@@ -18,8 +18,19 @@ namespace Application.Mappers
         public static FineDto ToDto( Fine fine )
         {
             return new FineDto(
+                fine.Id,
                 fine.Description,
                 fine.Amount
+            );
+        }
+        
+        public static FineWithRentalDto ToWithRentalDto( Fine fine )
+        {
+            return new FineWithRentalDto(
+                fine.Id,
+                fine.Description,
+                fine.Amount,
+                RentalMapper.ToFullDto( fine.Rental )
             );
         }
     }

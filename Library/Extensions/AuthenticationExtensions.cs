@@ -16,6 +16,7 @@ namespace Library.Extensions
                         if ( context.Request.Path.StartsWithSegments( "/api" ) )
                         {
                             context.Response.StatusCode = 401;
+                            context.Response.ContentType = "application/json";
                             return Task.CompletedTask;
                         }
 
@@ -28,6 +29,7 @@ namespace Library.Extensions
                         if ( context.Request.Path.StartsWithSegments( "/api" ) )
                         {
                             context.Response.StatusCode = 403;
+                            context.Response.ContentType = "application/json";
                             return Task.CompletedTask;
                         }
 
@@ -38,7 +40,8 @@ namespace Library.Extensions
                     options.ExpireTimeSpan = TimeSpan.FromDays( 14 );
                     options.SlidingExpiration = true;
                     options.Cookie.HttpOnly = true;
-                    // options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+                    options.Cookie.SecurePolicy = CookieSecurePolicy.None;
+                    options.Cookie.SameSite = SameSiteMode.Lax;
                 } );
 
             services.AddAuthorizationBuilder()

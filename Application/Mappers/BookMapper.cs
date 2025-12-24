@@ -8,10 +8,12 @@ namespace Application.Mappers
         public static BookDto ToDto( Book book )
         {
             return new BookDto(
+                book.Id,
                 book.Title,
                 book.Author,
                 book.Genre,
-                book.Deposit
+                book.Deposit,
+                book.TariffId
             );
         }
 
@@ -23,6 +25,7 @@ namespace Application.Mappers
                 book.Author,
                 book.Genre,
                 book.Deposit,
+                book.TariffId,
                 TariffMapper.ToReadDto( book.Tariff )
             );
         }
@@ -35,6 +38,7 @@ namespace Application.Mappers
                 book.Author,
                 book.Genre,
                 book.Deposit,
+                book.TariffId,
                 book.Rentals.Select( RentalMapper.ToWithReaderDto ).ToArray()
             );
         }

@@ -24,12 +24,14 @@ namespace Infrastructure.Repositories
         {
             return await _dbContext.Books
                 .Include( b => b.Rentals )
+                .ThenInclude(r => r.Reader )
                 .FirstOrDefaultAsync( b => b.Id == id );
         }
 
         public async Task<IReadOnlyList<Book>> GetReadOnlyList()
         {
             return await _dbContext.Books
+                .Include( b => b.Tariff )
                 .AsNoTracking()
                 .ToListAsync();
         }

@@ -5,6 +5,9 @@ namespace Application.DTOs
     public class RentalDto
     {
         [Required]
+        public int Id { get; init; }
+        
+        [Required]
         public DateOnly IssueDate { get; set; }
 
         [Required]
@@ -17,11 +20,13 @@ namespace Application.DTOs
 
 
         public RentalDto(
+            int id,
             DateOnly issueDate,
             DateOnly expectedReturnDate,
             decimal rentalAmount,
             DateOnly? actualReturnDate = null )
         {
+            Id = id;
             IssueDate = issueDate;
             ExpectedReturnDate = expectedReturnDate;
             RentalAmount = rentalAmount;
@@ -38,12 +43,13 @@ namespace Application.DTOs
         public int ReaderId { get; set; }
 
         public RentalCreateDto(
+            int id,
             int bookId,
             int readerId,
             DateOnly issueDate,
             DateOnly expectedReturnDate,
             decimal rentalAmount )
-            : base( issueDate, expectedReturnDate, rentalAmount )
+            : base( id, issueDate, expectedReturnDate, rentalAmount )
         {
             BookId = bookId;
             ReaderId = readerId;
@@ -59,12 +65,13 @@ namespace Application.DTOs
         public int ReaderId { get; set; }
 
         public RentalUpdateDto(
+            int id,
             int bookId,
             int readerId,
             DateOnly issueDate,
             DateOnly expectedReturnDate,
             decimal rentalAmount )
-            : base( issueDate, expectedReturnDate, rentalAmount )
+            : base( id, issueDate, expectedReturnDate, rentalAmount )
         {
             BookId = bookId;
             ReaderId = readerId;
@@ -79,21 +86,17 @@ namespace Application.DTOs
         [Required]
         public ReaderDto Reader { get; set; }
 
-        [Required]
-        public FineDto[] Fines { get; set; }
-
         public RentalFullDto(
+            int id,
             DateOnly issueDate,
             DateOnly expectedReturnDate,
             decimal rentalAmount,
             DateOnly? actualReturnDate,
             BookDto book,
-            ReaderDto reader,
-            FineDto[] fines ) : base( issueDate, expectedReturnDate, rentalAmount, actualReturnDate )
+            ReaderDto reader ) : base( id, issueDate, expectedReturnDate, rentalAmount, actualReturnDate )
         {
             Book = book;
             Reader = reader;
-            Fines = fines;
         }
     }
 
@@ -103,11 +106,12 @@ namespace Application.DTOs
         public ReaderDto Reader { get; set; }
 
         public RentalWithReaderDto(
+            int id,
             DateOnly issueDate,
             DateOnly expectedReturnDate,
             decimal rentalAmount,
             DateOnly? actualReturnDate,
-            ReaderDto reader ) : base( issueDate, expectedReturnDate, rentalAmount, actualReturnDate )
+            ReaderDto reader ) : base( id, issueDate, expectedReturnDate, rentalAmount, actualReturnDate )
         {
             Reader = reader;
         }
@@ -119,11 +123,12 @@ namespace Application.DTOs
         public BookDto Book { get; set; }
 
         public RentalWithBookDto(
+            int id,
             DateOnly issueDate,
             DateOnly expectedReturnDate,
             decimal rentalAmount,
             DateOnly? actualReturnDate,
-            BookDto book ) : base( issueDate, expectedReturnDate, rentalAmount, actualReturnDate )
+            BookDto book ) : base( id, issueDate, expectedReturnDate, rentalAmount, actualReturnDate )
         {
             Book = book;
         }

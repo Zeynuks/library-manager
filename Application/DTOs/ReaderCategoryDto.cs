@@ -5,6 +5,9 @@ namespace Application.DTOs
     public class ReaderCategoryDto
     {
         [Required]
+        public int Id { get; init; }
+
+        [Required]
         [StringLength( 100 )]
         public string Name { get; set; }
 
@@ -12,8 +15,9 @@ namespace Application.DTOs
         [StringLength( 20 )]
         public decimal DiscountRate { get; set; }
 
-        public ReaderCategoryDto( string name, decimal discountRate )
+        public ReaderCategoryDto( int id, string name, decimal discountRate )
         {
+            Id = id;
             Name = name;
             DiscountRate = discountRate;
         }
@@ -21,33 +25,25 @@ namespace Application.DTOs
 
     public class ReaderCategoryCreateDto : ReaderCategoryDto
     {
-        public ReaderCategoryCreateDto( string name, decimal discountRate )
-            : base( name, discountRate )
+        public ReaderCategoryCreateDto( int id, string name, decimal discountRate )
+            : base( id, name, discountRate )
         {
         }
     }
 
     public class ReaderCategoryUpdateDto : ReaderCategoryDto
     {
-        [Required]
-        public int Id { get; set; }
-
         public ReaderCategoryUpdateDto( int id, string name, decimal discountRate )
-            : base( name, discountRate )
+            : base( id, name, discountRate )
         {
-            Id = id;
         }
     }
 
     public class ReaderCategoryReadDto : ReaderCategoryDto
     {
-        [Required]
-        public int Id { get; set; }
-
         public ReaderCategoryReadDto( int id, string name, decimal discountRate )
-            : base( name, discountRate )
+            : base( id, name, discountRate )
         {
-            Id = id;
         }
     }
 }

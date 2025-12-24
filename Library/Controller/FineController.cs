@@ -44,7 +44,7 @@ namespace Library.Controller
         [SwaggerOperation( OperationId = "FineGetList", Summary = "Список штрафов" )]
         public async Task<IActionResult> GetList()
         {
-            IReadOnlyList<FineDto> list = await _fineService.GetList();
+            IReadOnlyList<FineWithRentalDto> list = await _fineService.GetList();
             return Ok( list );
         }
 

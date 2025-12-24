@@ -29,12 +29,12 @@ namespace Application.Services.FineService
             return FineMapper.ToReadDto( fine );
         }
 
-        public async Task<IReadOnlyList<FineDto>> GetList()
+        public async Task<IReadOnlyList<FineWithRentalDto>> GetList()
         {
             IReadOnlyList<Fine> fines = await _fineRepository.GetReadOnlyList();
 
             return fines
-                .Select( FineMapper.ToDto )
+                .Select( FineMapper.ToWithRentalDto )
                 .ToList();
         }
 

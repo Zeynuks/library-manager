@@ -40,10 +40,10 @@ namespace Library.Controller
         /// </summary>
         /// <param name="id">Идентификатор книги.</param>
         /// <returns>Список прокатов заданной книги.</returns>
-        [HttpGet( "{id:int}/rentails" )]
+        [HttpGet( "{id:int}/rentals" )]
         [Authorize( Roles = "Administrator,Manager,Operator" )]
         [SwaggerOperation( OperationId = "BookGetWithRentals", Summary = "Список прокатов по книге" )]
-        public async Task<IActionResult> GetByBook( int id )
+        public async Task<IActionResult> GetWithRentals( int id )
         {
             BookWithRentalsDto rentals = await _bookService.GetWithRentals( id );
             return Ok( rentals );
@@ -58,7 +58,7 @@ namespace Library.Controller
         [SwaggerOperation( OperationId = "BookGetList", Summary = "Список книг" )]
         public async Task<IActionResult> GetList()
         {
-            IReadOnlyList<BookDto> list = await _bookService.GetList();
+            IReadOnlyList<BookWithTariffDto> list = await _bookService.GetList();
             return Ok( list );
         }
 
@@ -107,6 +107,20 @@ namespace Library.Controller
         {
             await _bookService.Remove( id );
             return NoContent();
+        }
+
+        /// <summary>
+        /// Проверить, занята ли книга (есть ли активная аренда).
+        /// </summary>
+        /// <param name="id">Идентификатор книги.</param>
+        /// <returns>true — если есть открытая аренда, иначе false.</returns>
+        [HttpGet( "{id:int}/occupied" )]
+        [Authorize( Roles = "Administrator,Manager,Operator" )]
+        [SwaggerOperation( OperationId = "BookIsOccupied", Summary = "Проверить, арендована ли книга" )]
+        public async Task<IActionResult> IsOccupied( int id )
+        {
+            bool isOccupied = await _bookService.IsOccupied( id );
+            return Ok( isOccupied );
         }
     }
 }

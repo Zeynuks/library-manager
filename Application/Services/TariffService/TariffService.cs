@@ -31,12 +31,12 @@ namespace Application.Services.TariffService
             return TariffMapper.ToReadDto( tariff );
         }
 
-        public async Task<IReadOnlyList<TariffDto>> GetList()
+        public async Task<IReadOnlyList<TariffReadDto>> GetList()
         {
             IReadOnlyList<Tariff> tariffs = await _tariffRepository.GetReadOnlyList();
 
             return tariffs
-                .Select( TariffMapper.ToDto )
+                .Select( TariffMapper.ToReadDto )
                 .ToList();
         }
 

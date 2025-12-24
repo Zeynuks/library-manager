@@ -5,6 +5,9 @@ namespace Application.DTOs
     public class TariffDto
     {
         [Required]
+        public int Id { get; init; }
+        
+        [Required]
         [StringLength( 100 )]
         public string Name { get; set; }
 
@@ -12,8 +15,9 @@ namespace Application.DTOs
         [StringLength( 20 )]
         public decimal DailyRate { get; set; }
 
-        public TariffDto( string name, decimal dailyRate )
+        public TariffDto( int id, string name, decimal dailyRate )
         {
+            Id = id;
             Name = name;
             DailyRate = dailyRate;
         }
@@ -21,28 +25,25 @@ namespace Application.DTOs
 
     public class TariffCreateDto : TariffDto
     {
-        public TariffCreateDto( string name, decimal dailyRate )
-            : base( name, dailyRate )
+        public TariffCreateDto( int id, string name, decimal dailyRate )
+            : base( id, name, dailyRate )
         {
         }
     }
 
     public class TariffUpdateDto : TariffDto
     {
-        public TariffUpdateDto( string name, decimal dailyRate )
-            : base( name, dailyRate )
+        public TariffUpdateDto( int id, string name, decimal dailyRate )
+            : base( id, name, dailyRate )
         {
         }
     }
 
     public class TariffReadDto : TariffDto
     {
-        public int Id { get; set; }
-
         public TariffReadDto( int id, string name, decimal dailyRate )
-            : base( name, dailyRate )
+            : base( id, name, dailyRate )
         {
-            Id = id;
         }
     }
 }

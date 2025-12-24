@@ -1,9 +1,13 @@
 using System.ComponentModel.DataAnnotations;
+using Domain.Entities;
 
 namespace Application.DTOs
 {
     public class FineDto
     {
+        [Required]
+        public int Id { get; init; }
+        
         [Required]
         [StringLength( 500 )]
         public string Description { get; set; }
@@ -12,8 +16,9 @@ namespace Application.DTOs
         [Range( 0.01, double.MaxValue )]
         public decimal Amount { get; set; }
 
-        public FineDto( string description, decimal amount )
+        public FineDto( int id, string description, decimal amount )
         {
+            Id = id;
             Description = description;
             Amount = amount;
         }
@@ -24,8 +29,8 @@ namespace Application.DTOs
         [Required]
         public int RentalId { get; set; }
 
-        public FineCreateDto( int rentalId, string description, decimal amount )
-            : base( description, amount )
+        public FineCreateDto( int id, int rentalId, string description, decimal amount )
+            : base( id, description, amount )
         {
             RentalId = rentalId;
         }
@@ -33,8 +38,8 @@ namespace Application.DTOs
 
     public class FineUpdateDto : FineDto
     {
-        public FineUpdateDto( string description, decimal amount )
-            : base( description, amount )
+        public FineUpdateDto( int id, string description, decimal amount )
+            : base( id, description, amount )
         {
         }
     }
@@ -42,16 +47,24 @@ namespace Application.DTOs
     public class FineReadDto : FineDto
     {
         [Required]
-        public int Id { get; set; }
-
-        [Required]
         public int RentalId { get; set; }
 
         public FineReadDto( int id, int rentalId, string description, decimal amount )
-            : base( description, amount )
+            : base( id, description, amount )
         {
-            Id = id;
             RentalId = rentalId;
+        }
+    }
+
+    public class FineWithRentalDto : FineDto
+    {
+        [Required]
+        public RentalFullDto Rental { get; set; }
+
+        public FineWithRentalDto( int id, string description, decimal amount, RentalFullDto rental )
+            : base( id, description, amount )
+        {
+            Rental = rental;
         }
     }
 }

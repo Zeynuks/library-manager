@@ -17,6 +17,7 @@ namespace Application.Mappers
         public static TariffDto ToDto( Tariff tariff )
         {
             return new TariffDto(
+                tariff.Id,
                 tariff.Name,
                 tariff.DailyRate
             );

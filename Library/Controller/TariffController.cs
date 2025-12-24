@@ -44,7 +44,7 @@ namespace Library.Controller
         [SwaggerOperation( OperationId = "TariffGetList", Summary = "Список тарифов" )]
         public async Task<IActionResult> GetList()
         {
-            IReadOnlyList<TariffDto> list = await _tariffService.GetList();
+            IReadOnlyList<TariffReadDto> list = await _tariffService.GetList();
             return Ok( list );
         }
 

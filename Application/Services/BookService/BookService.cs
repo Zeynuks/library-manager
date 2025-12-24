@@ -45,12 +45,12 @@ namespace Application.Services.BookService
             return BookMapper.ToWithRentalsDto( book );
         }
 
-        public async Task<IReadOnlyList<BookDto>> GetList()
+        public async Task<IReadOnlyList<BookWithTariffDto>> GetList()
         {
             IReadOnlyList<Book> books = await _bookRepository.GetReadOnlyList();
 
             return books
-                .Select( BookMapper.ToDto )
+                .Select( BookMapper.ToWithTariffDto )
                 .ToList();
         }
 
@@ -114,6 +114,17 @@ namespace Application.Services.BookService
 
             _bookRepository.Delete( book );
             await _unitOfWork.CommitAsync();
+        }
+
+        public async Task<bool> IsOccupied( int id )
+        {
+            Book? book = await _bookRepository.TryGetWithRentals( id );
+            if ( book is null )
+            {
+                throw new DomainNotFoundException( $"Book with ID {id} not be found." );
+            }
+            
+            return book.Rentals.Any( r => r.ActualReturnDate == null );
         }
     }
 }

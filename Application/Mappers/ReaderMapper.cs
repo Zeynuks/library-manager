@@ -8,6 +8,7 @@ namespace Application.Mappers
         public static ReaderDto ToDto( Reader reader )
         {
             return new ReaderDto(
+                reader.Id,
                 reader.FirstName,
                 reader.MiddleName,
                 reader.LastName,

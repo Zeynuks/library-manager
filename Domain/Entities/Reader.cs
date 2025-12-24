@@ -6,7 +6,7 @@ namespace Domain.Entities
     {
         public int Id { get; private init; }
         public string FirstName { get; private set; }
-        public string MiddleName { get; private set; }
+        public string? MiddleName { get; private set; }
         public string LastName { get; private set; }
         public string Address { get; private set; } //TODO Можно вынести в отдельную сущность
         public string PhoneNumber { get; private set; }

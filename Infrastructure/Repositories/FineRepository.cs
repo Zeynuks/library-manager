@@ -17,6 +17,9 @@ namespace Infrastructure.Repositories
         {
             return await _dbContext.Fines
                 .Include( f => f.Rental )
+                .ThenInclude( r => r.Reader )
+                .Include(f => f.Rental )
+                .ThenInclude( r => r.Book )
                 .FirstOrDefaultAsync( f => f.Id == id );
         }
 
@@ -30,6 +33,10 @@ namespace Infrastructure.Repositories
         public async Task<IReadOnlyList<Fine>> GetReadOnlyList()
         {
             return await _dbContext.Fines
+                .Include( f => f.Rental )
+                .ThenInclude( r => r.Reader )
+                .Include( f => f.Rental )
+                .ThenInclude( r => r.Book )
                 .AsNoTracking()
                 .ToListAsync();
         }

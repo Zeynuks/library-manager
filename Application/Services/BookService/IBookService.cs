@@ -6,9 +6,10 @@ namespace Application.Services.BookService
     {
         Task<BookWithTariffDto> GetById( int id );
         Task<BookWithRentalsDto> GetWithRentals( int id );
-        Task<IReadOnlyList<BookDto>> GetList();
+        Task<IReadOnlyList<BookWithTariffDto>> GetList();
         Task<int> Create( BookCreateDto dto );
         Task Update( int id, BookUpdateDto dto );
         Task Remove( int id );
+        Task<bool> IsOccupied( int id );
     }
 }

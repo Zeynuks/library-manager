@@ -17,6 +17,7 @@ namespace Application.Mappers
         public static ReaderCategoryDto ToDto( ReaderCategory category )
         {
             return new ReaderCategoryDto(
+                category.Id,
                 category.Name,
                 category.DiscountRate
             );

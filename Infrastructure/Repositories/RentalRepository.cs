@@ -18,7 +18,6 @@ namespace Infrastructure.Repositories
             return await _dbContext.Rentals
                 .Include( r => r.Book )
                 .Include( r => r.Reader )
-                .Include( r => r.Fines )
                 .FirstOrDefaultAsync( r => r.Id == id );
         }
 

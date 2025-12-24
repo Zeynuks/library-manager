@@ -5,11 +5,14 @@ namespace Application.DTOs
     public class ReaderDto
     {
         [Required]
+        public int Id { get; init; }
+        
+        [Required]
         [StringLength( 100 )]
         public string FirstName { get; set; }
 
         [StringLength( 100 )]
-        public string MiddleName { get; set; }
+        public string? MiddleName { get; set; }
 
         [Required]
         [StringLength( 100 )]
@@ -24,12 +27,14 @@ namespace Application.DTOs
         public string PhoneNumber { get; set; }
 
         public ReaderDto(
+            int id,
             string firstName,
-            string middleName,
+            string? middleName,
             string lastName,
             string address,
             string phoneNumber )
         {
+            Id = id;
             FirstName = firstName;
             MiddleName = middleName;
             LastName = lastName;
@@ -44,13 +49,14 @@ namespace Application.DTOs
         public int CategoryId { get; set; }
 
         public ReaderCreateDto(
+            int id,
             string firstName,
-            string middleName,
+            string? middleName,
             string lastName,
             string address,
             string phoneNumber,
             int categoryId )
-            : base( firstName, middleName, lastName, address, phoneNumber )
+            : base( id, firstName, middleName, lastName, address, phoneNumber )
         {
             CategoryId = categoryId;
         }
@@ -59,12 +65,13 @@ namespace Application.DTOs
     public class ReaderUpdateDto : ReaderDto
     {
         public ReaderUpdateDto(
+            int id,
             string firstName,
-            string middleName,
+            string? middleName,
             string lastName,
             string address,
             string phoneNumber )
-            : base( firstName, middleName, lastName, address, phoneNumber )
+            : base( id, firstName, middleName, lastName, address, phoneNumber )
         {
         }
     }
@@ -72,22 +79,18 @@ namespace Application.DTOs
     public class ReaderWithCategoryDto : ReaderDto
     {
         [Required]
-        public int Id { get; set; }
-
-        [Required]
         public ReaderCategoryReadDto Category { get; set; }
 
         public ReaderWithCategoryDto(
             int id,
             string firstName,
-            string middleName,
+            string? middleName,
             string lastName,
             string address,
             string phoneNumber,
             ReaderCategoryReadDto category )
-            : base( firstName, middleName, lastName, address, phoneNumber )
+            : base( id, firstName, middleName, lastName, address, phoneNumber )
         {
-            Id = id;
             Category = category;
         }
     }
@@ -95,22 +98,18 @@ namespace Application.DTOs
     public class ReaderWithRentalsDto : ReaderDto
     {
         [Required]
-        public int Id { get; set; }
-
-        [Required]
         public RentalWithBookDto[] Rentals { get; init; }
 
         public ReaderWithRentalsDto(
             int id,
             string firstName,
-            string middleName,
+            string? middleName,
             string lastName,
             string address,
             string phoneNumber,
             RentalWithBookDto[] rentals )
-            : base( firstName, middleName, lastName, address, phoneNumber )
+            : base( id, firstName, middleName, lastName, address, phoneNumber )
         {
-            Id = id;
             Rentals = rentals;
         }
     }
