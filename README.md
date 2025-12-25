@@ -4,4 +4,4 @@ LibraryManager — это система управления библиотек
 Позволяет управлять книгами, читателями, тарифами аренды и вести учёт выдачи и возврата книг.
 
 ## Схема базы данных
-![Database Schema](docs/db-diagram.svg)
+![Database Schema](docs/db-diagram.jpg)
