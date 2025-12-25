@@ -45,7 +45,13 @@ export const ReaderCategoryListView = ({
 
     const columns = [
         { title: 'Название', dataIndex: 'name', key: 'name' },
-        { title: 'Скидка', dataIndex: 'discountRate', key: 'discountRate', render: (rate: number) => rate ? `${rate}%` : '-' },
+        {
+            title: 'Скидка',
+            dataIndex: 'discountRate',
+            key: 'discountRate',
+            render: (rate: number) =>
+                rate != null ? `${(rate * 100).toFixed(0)}%` : '-'
+        },
         {
             title: '',
             key: 'actions',
@@ -53,6 +59,7 @@ export const ReaderCategoryListView = ({
             render: actions
         }
     ];
+
 
     return (
         <Table

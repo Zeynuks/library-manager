@@ -15,11 +15,18 @@ export const ReaderCategoryFormView = ({
     const isManager = user?.roles?.includes("Manager");
 
     React.useEffect(() => {
-        form.setFieldsValue(category ?? {});
+        if (category) {
+            form.setFieldsValue({
+                ...category,
+                discountRate: category.discountRate != null ? category.discountRate * 100 : undefined,
+            });
+        } else {
+            form.resetFields();
+        }
     }, [category]);
 
     const isCreateMode = !category;
-
+    console.log(category);
     return (
         <Row>
             <Card title={isCreateMode ? "Новая категория" : "Категория"} style={{ width: 500 }}>
@@ -33,8 +40,15 @@ export const ReaderCategoryFormView = ({
                         <Input />
                     </Form.Item>
 
-                    <Form.Item name="discountRate" label="Скидка (%)">
-                        <InputNumber min={0} max={100} style={{ width: "100%" }} />
+                    <Form.Item
+                        name="discountRate"
+                        label="Скидка (%)"
+                    >
+                        <InputNumber
+                            min={1}
+                            max={100}
+                            style={{ width: "100%" }}
+                        />
                     </Form.Item>
                 </Form>
 

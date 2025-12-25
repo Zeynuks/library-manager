@@ -21,8 +21,8 @@ export const useReaderCategoryFormState = ({ category }: ReaderCategoryFormProps
 
     const save = async (formCategory: ReaderCategory) => {
         let savedCategory: ReaderCategory;
-        if (category?.id) {
-            await updateReaderCategory(category.id, formCategory);
+        if (category?.id && formCategory.discountRate) {
+            await updateReaderCategory(category.id, {...formCategory, discountRate: (formCategory.discountRate / 100)});
         } else {
             savedCategory = await createReaderCategory(formCategory);
             navigate(`/reader-categories/${savedCategory.id}`);
