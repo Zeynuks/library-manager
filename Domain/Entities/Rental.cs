@@ -20,12 +20,14 @@ namespace Domain.Entities
             int readerId,
             DateOnly issueDate,
             DateOnly expectedReturnDate,
+            DateOnly? actualReturnDate,
             decimal rentalAmount )
         {
             BookId = bookId;
             ReaderId = readerId;
             IssueDate = ValidateDate( issueDate );
             ExpectedReturnDate = ValidateExpectedReturnDate( issueDate, expectedReturnDate );
+            ActualReturnDate = ValidateActualReturnDate( issueDate, expectedReturnDate );
             RentalAmount = rentalAmount;
         }
 

@@ -74,6 +74,7 @@ namespace Application.Services.RentalService
                 dto.ReaderId,
                 dto.IssueDate,
                 dto.ExpectedReturnDate,
+                dto.ActualReturnDate,
                 CalculateRentalAmount(
                     issueDate: dto.IssueDate,
                     expectedReturnDate: dto.ExpectedReturnDate,
