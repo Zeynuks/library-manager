@@ -89,8 +89,7 @@ namespace Library.Controller
         /// <returns>Сумма к оплате.</returns>
         [HttpPost( "{id:int}/return" )]
         [Authorize( Roles = "Operator" )]
-        [SwaggerOperation( OperationId = "RentalReturn",
-            Summary = "Вернуть книгу и рассчитать сумму платежа" )]
+        [SwaggerOperation( OperationId = "RentalReturn", Summary = "Вернуть книгу и рассчитать сумму платежа" )]
         public async Task<IActionResult> ReturnBook(
             int id,
             [FromBody] RentalReturnDto dto )

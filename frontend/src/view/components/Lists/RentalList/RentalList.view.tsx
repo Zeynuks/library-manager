@@ -1,5 +1,5 @@
 import {Popconfirm, Space, Table} from "antd";
-import {DeleteOutlined, EditOutlined} from "@ant-design/icons";
+import {DeleteOutlined, EditOutlined, RollbackOutlined} from "@ant-design/icons";
 import type {Rental} from "@/domain/Rental.ts";
 import {useRentalListState} from './RentalList.state.ts';
 import {useAuthUser} from "@/hooks/useAuthUser.ts";
@@ -16,12 +16,24 @@ export const RentalListView = ({
         user?.roles?.includes("Operator") ? (
             <Space size="middle">
                 <EditOutlined
-                    style={{cursor: 'pointer'}}
+                    style={{ cursor: "pointer" }}
                     onClick={(e) => {
                         e.stopPropagation();
                         navigate(`/rentals/${rental.id}`);
                     }}
                 />
+
+                {!rental.actualReturnDate && (
+                    <RollbackOutlined
+                        style={{ cursor: "pointer", color: "#1677ff" }}
+                        title="Вернуть книгу"
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            navigate(`/rentals/${rental.id}/return`);
+                        }}
+                    />
+                )}
+
                 {user?.roles?.includes("Manager") && (
                     <Popconfirm
                         title="Удалить аренду?"
@@ -35,12 +47,14 @@ export const RentalListView = ({
                     >
                         <DeleteOutlined
                             onClick={(e) => e.stopPropagation()}
-                            style={{cursor: 'pointer', color: 'red'}}
+                            style={{ cursor: "pointer", color: "red" }}
                         />
-                    </Popconfirm>)}
+                    </Popconfirm>
+                )}
             </Space>
         ) : null
     );
+
 
     const columns = [
         {

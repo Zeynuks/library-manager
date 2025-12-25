@@ -27,7 +27,7 @@ namespace Domain.Entities
             ReaderId = readerId;
             IssueDate = ValidateDate( issueDate );
             ExpectedReturnDate = ValidateExpectedReturnDate( issueDate, expectedReturnDate );
-            ActualReturnDate = ValidateActualReturnDate( issueDate, expectedReturnDate );
+            ActualReturnDate = ValidateActualReturnDate( issueDate, actualReturnDate );
             RentalAmount = rentalAmount;
         }
 
@@ -68,7 +68,7 @@ namespace Domain.Entities
             return expectedReturnDate;
         }
 
-        private static DateOnly ValidateActualReturnDate( DateOnly issueDate, DateOnly actualReturnDate )
+        private static DateOnly? ValidateActualReturnDate( DateOnly issueDate, DateOnly? actualReturnDate )
         {
             if ( actualReturnDate < issueDate )
             {

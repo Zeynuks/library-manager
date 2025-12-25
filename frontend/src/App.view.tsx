@@ -29,6 +29,7 @@ import {ForbiddenPage} from "@/view/pages/ForbiddenPage.tsx";
 import {UserListPage} from "@/view/pages/UserListPage.tsx";
 import {CreateUserPage} from "@/view/pages/CreateUserPage.tsx";
 import {UserPage} from "@/view/pages/UserPage.tsx";
+import {RentalReturnPage} from "@/view/pages/RentalReturnPage.tsx";
 
 export const AppView = () => (
     <Routes>
@@ -62,6 +63,7 @@ export const AppView = () => (
             <Route path="/tariffs/:id" element={<TariffPage/>}/>
             <Route path="/rentals" element={<RentalListPage/>}/>
             <Route path="/rentals/:id" element={<RentalPage/>}/>
+            <Route path="/rentals/:id/return" element={<RentalReturnPage />} />
         </Route>
 
         <Route element={<ProtectedRoute allowedRoles={["Administrator"]}/>}>

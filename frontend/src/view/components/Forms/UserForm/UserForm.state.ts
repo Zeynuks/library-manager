@@ -10,7 +10,6 @@ export const useUserFormState = ({user}: UserFormProps) => {
     const [blocked, setBlocked] = useState<boolean | undefined>(user?.isBlocked);
     const [disabled, setDisabled] = useState(!!user);
     const navigate = useNavigate();
-    console.log(user)
     const save = async (formUser: User) => {
         if (user?.id) {
             if (formUser.isBlocked != user.isBlocked) {
