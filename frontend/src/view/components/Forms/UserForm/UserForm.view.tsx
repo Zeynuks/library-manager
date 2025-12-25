@@ -1,106 +1,95 @@
-import { Button, Card, Form, Input, Row, Select, Switch } from "antd";
 import * as React from "react";
-import type { User } from "@/domain";
-import { useUserFormState } from "./UserForm.state.ts";
+import {Button, Card, Col, Form, Input, Row, Select} from "antd";
+import {useAuthUser} from "@/hooks/useAuthUser.ts";
+import type {User} from "@/domain/User.ts";
+import {useUserFormState} from "./UserForm.state.ts";
 
-const roleOptions = [
-    { label: "Администратор", value: "Administrator" },
-    { label: "Пользователь", value: "User" }
-];
+type UserRole = 0 | 1 | 2;
+
+const USER_ROLE_LABEL: Record<UserRole, string> = {
+    0: "Administrator",
+    1: "Manager",
+    2: "Operator",
+};
 
 export const UserFormView = ({
                                  user,
+                                 roles,
                                  disabled,
+                                 blocked,
                                  setDisabled,
-                                 save
+                                 toggleBlockUser,
+                                 save,
                              }: ReturnType<typeof useUserFormState>) => {
-
     const [form] = Form.useForm<User>();
+    const currentUser = useAuthUser();
+    const isAdmin = currentUser?.roles?.includes("Administrator");
+    const isCreateMode = !user;
 
     React.useEffect(() => {
         form.setFieldsValue(user ?? {});
     }, [user]);
 
-    const isCreateMode = !user;
-
     return (
         <Row>
             <Card title={isCreateMode ? "Новый пользователь" : "Пользователь"} style={{ width: 500 }}>
+                {isAdmin && !isCreateMode && (
+                    <Row justify="end">
+                        <Button
+                            type="primary"
+                            danger={blocked}
+                            onClick={toggleBlockUser}
+                        >
+                            {blocked ? "Заблокирован" : "Разблокирован"}
+                        </Button>
+                    </Row>
+                )}
                 <Form
                     form={form}
                     layout="vertical"
                     disabled={!isCreateMode && disabled}
                     onFinish={save}
                 >
-                    <Form.Item
-                        name="login"
-                        label="Логин"
-                        rules={[{ required: true }]}
-                    >
+                    <Form.Item name="login" label="Логин" rules={[{required: true}]}>
                         <Input />
                     </Form.Item>
 
                     {isCreateMode && (
-                        <Form.Item
-                            name="password"
-                            label="Пароль"
-                            rules={[{ required: true }]}
-                        >
+                        <Form.Item name="password" label="Пароль" rules={[{required: true}]}>
                             <Input.Password />
                         </Form.Item>
                     )}
 
                     <Form.Item
-                        name="role"
+                        name={["roles", 0]}
                         label="Роль"
                         rules={[{ required: true }]}
                     >
-                        <Select options={roleOptions} />
+                        <Select
+                            options={roles.map((r) => ({
+                                value: r,
+                                label: USER_ROLE_LABEL[r as unknown as UserRole],
+                            }))}
+                        />
                     </Form.Item>
-
-                    {!isCreateMode && (
-                        <Form.Item
-                            name="isBlocked"
-                            label="Заблокирован"
-                            valuePropName="checked"
-                        >
-                            <Switch />
-                        </Form.Item>
-                    )}
                 </Form>
-
-                {isCreateMode ? (
-                    <div style={{ display: "flex", gap: 8 }}>
-                        <Button block onClick={() => form.resetFields()}>
-                            Очистить
-                        </Button>
-                        <Button type="primary" block onClick={() => form.submit()}>
-                            Создать
-                        </Button>
-                    </div>
-                ) : disabled ? (
-                    <Button
-                        type="primary"
-                        block
-                        onClick={() => setDisabled(false)}
-                    >
-                        Редактировать
-                    </Button>
-                ) : (
-                    <div style={{ display: "flex", gap: 8 }}>
-                        <Button
-                            block
-                            onClick={() => {
+                {isAdmin && (
+                    isCreateMode ? (
+                        <Col style={{display: "flex", gap: 8}}>
+                            <Button block onClick={() => form.resetFields()}>Очистить</Button>
+                            <Button type="primary" block onClick={() => form.submit()}>Создать</Button>
+                        </Col>
+                    ) : disabled ? (
+                        <Button type="primary" block onClick={() => setDisabled(false)}>Редактировать</Button>
+                    ) : (
+                        <Col style={{display: "flex", gap: 8}}>
+                            <Button block onClick={() => {
                                 form.setFieldsValue(user);
                                 setDisabled(true);
-                            }}
-                        >
-                            Отмена
-                        </Button>
-                        <Button type="primary" block onClick={() => form.submit()}>
-                            Сохранить
-                        </Button>
-                    </div>
+                            }}>Отмена</Button>
+                            <Button type="primary" block onClick={() => form.submit()}>Сохранить</Button>
+                        </Col>
+                    )
                 )}
             </Card>
         </Row>

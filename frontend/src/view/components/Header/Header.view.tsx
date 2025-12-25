@@ -22,93 +22,85 @@ export const HeaderView = ({user, onLogout, navigate}: ReturnType<typeof useHead
         return [
             {
                 key: "books",
-                icon: <BookOutlined/>,
+                icon: <BookOutlined />,
                 label: "Книги",
                 children: user.roles.some((role) => role === "Manager")
                     ? [
-                        {key: "books:create", label: "Создать книгу", onClick: () => navigate("/books/create")},
-                        {key: "books:list", label: "Список книг", onClick: () => navigate("/books")},
+                        { key: "books:create", label: "Создать книгу", onClick: () => navigate("/books/create") },
+                        { key: "books:list", label: "Список книг", onClick: () => navigate("/books") },
                     ]
-                    : [
-                        {key: "books:list", label: "Список книг", onClick: () => navigate("/books")},
-                    ],
+                    : [{ key: "books:list", label: "Список книг", onClick: () => navigate("/books") }],
             },
             {
                 key: "tariffs",
-                icon: <DollarOutlined/>,
+                icon: <DollarOutlined />,
                 label: "Тарифы",
                 children: user.roles.some((role) => role === "Manager")
                     ? [
-                        {key: "tariffs:create", label: "Создать тариф", onClick: () => navigate("/tariffs/create")},
-                        {key: "tariffs:list", label: "Список тарифов", onClick: () => navigate("/tariffs")},
+                        { key: "tariffs:create", label: "Создать тариф", onClick: () => navigate("/tariffs/create") },
+                        { key: "tariffs:list", label: "Список тарифов", onClick: () => navigate("/tariffs") },
                     ]
-                    : [
-                        {key: "tariffs:list", label: "Список тарифов", onClick: () => navigate("/tariffs")},
-                    ],
+                    : [{ key: "tariffs:list", label: "Список тарифов", onClick: () => navigate("/tariffs") }],
             },
             {
                 key: "fines",
-                icon: <DollarOutlined/>,
+                icon: <DollarOutlined />,
                 label: "Штрафы",
                 children: user.roles.some((role) => role === "Manager")
                     ? [
-                        {key: "fines:create", label: "Создать штраф", onClick: () => navigate("/fines/create")},
-                        {key: "fines:list", label: "Список штрафов", onClick: () => navigate("/fines")},
+                        { key: "fines:create", label: "Создать штраф", onClick: () => navigate("/fines/create") },
+                        { key: "fines:list", label: "Список штрафов", onClick: () => navigate("/fines") },
                     ]
-                    : [
-                        {key: "fines:list", label: "Список штрафов", onClick: () => navigate("/fines")},
-                    ],
+                    : [{ key: "fines:list", label: "Список штрафов", onClick: () => navigate("/fines") }],
             },
             {
                 key: "categories",
-                icon: <TagsOutlined/>,
+                icon: <TagsOutlined />,
                 label: "Категории читателей",
                 children: user.roles.some((role) => role === "Manager")
                     ? [
                         {
                             key: "categories:create",
                             label: "Создать категорию",
-                            onClick: () => navigate("/reader-categories/create")
+                            onClick: () => navigate("/reader-categories/create"),
                         },
-                        {
-                            key: "categories:list",
-                            label: "Список категорий",
-                            onClick: () => navigate("/reader-categories")
-                        },
+                        { key: "categories:list", label: "Список категорий", onClick: () => navigate("/reader-categories") },
                     ]
-                    : [
-                        {
-                            key: "categories:list",
-                            label: "Список категорий",
-                            onClick: () => navigate("/reader-categories")
-                        },
-                    ],
+                    : [{ key: "categories:list", label: "Список категорий", onClick: () => navigate("/reader-categories") }],
             },
             {
                 key: "readers",
-                icon: <UserOutlined/>,
+                icon: <UserOutlined />,
                 label: "Читатели",
                 children: user.roles.some((role) => role === "Manager")
                     ? [
-                        {key: "readers:create", label: "Создать читателя", onClick: () => navigate("/readers/create")},
-                        {key: "readers:list", label: "Список читателей", onClick: () => navigate("/readers")},
+                        { key: "readers:create", label: "Создать читателя", onClick: () => navigate("/readers/create") },
+                        { key: "readers:list", label: "Список читателей", onClick: () => navigate("/readers") },
                     ]
-                    : [
-                        {key: "readers:list", label: "Список читателей", onClick: () => navigate("/readers")},
-                    ],
+                    : [{ key: "readers:list", label: "Список читателей", onClick: () => navigate("/readers") }],
+            },
+            {
+                key: "users",
+                icon: <UserOutlined />,
+                label: "Пользователи",
+                children: [
+                    { key: "users:create", label: "Создать пользователя", onClick: () => navigate("/users/create") },
+                    { key: "users:list", label: "Список пользователей", onClick: () => navigate("/users") },
+                ],
+                hidden: !user.roles.includes("Administrator"),
             },
             {
                 key: "rentals",
-                icon: <BookOutlined/>,
+                icon: <BookOutlined />,
                 label: "Аренды",
                 children: user.roles.some((role) => role === "Operator")
                     ? [
-                        {key: "rentals:create", label: "Создать аренду", onClick: () => navigate("/rentals/create")},
-                        {key: "rentals:list", label: "Список аренд", onClick: () => navigate("/rentals")},
+                        { key: "rentals:create", label: "Создать аренду", onClick: () => navigate("/rentals/create") },
+                        { key: "rentals:list", label: "Список аренд", onClick: () => navigate("/rentals") },
                     ]
-                    : [{key: "rentals:list", label: "Список аренд", onClick: () => navigate("/rentals")}],
+                    : [{ key: "rentals:list", label: "Список аренд", onClick: () => navigate("/rentals") }],
             },
-        ];
+        ].filter(item => !item.hidden);
     }, [user, navigate]);
 
     return (
@@ -125,13 +117,13 @@ export const HeaderView = ({user, onLogout, navigate}: ReturnType<typeof useHead
             <Text strong style={{fontSize: 16}}>LibraryManager</Text>
 
             <Space>
-                {user && menuItems.length > 0 && (
+                {user.login && menuItems.length > 0 && (
                     <Dropdown menu={{items: menuItems}} placement="bottomRight" trigger={["click"]}>
                         <Button icon={<MenuOutlined/>}>Меню</Button>
                     </Dropdown>
                 )}
 
-                {user ? (
+                {user.login ? (
                     <Space>
                         <Text><UserOutlined/> {user.login}</Text>
                         <Button danger icon={<LogoutOutlined/>} onClick={onLogout}>Выйти</Button>

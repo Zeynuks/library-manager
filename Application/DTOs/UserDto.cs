@@ -13,12 +13,12 @@ namespace Application.DTOs
         public string Login { get; init; }
 
         [Required]
-        public UserRole Role { get; init; }
+        public string Role { get; init; }
 
         [Required]
         public bool IsBlocked { get; init; }
 
-        public UserDto( int id, string login, UserRole role, bool isBlocked )
+        public UserDto( int id, string login, string role, bool isBlocked )
         {
             Id = id;
             Login = login;
@@ -38,9 +38,9 @@ namespace Application.DTOs
         public string Password { get; init; }
 
         [Required]
-        public UserRole Role { get; init; }
+        public string Role { get; init; }
 
-        public UserCreateDto( string login, string password, UserRole role )
+        public UserCreateDto( string login, string password, string role )
         {
             Login = login;
             Password = password;
@@ -55,9 +55,9 @@ namespace Application.DTOs
         public string Login { get; init; }
 
         [Required]
-        public UserRole Role { get; init; }
+        public string Role { get; init; }
 
-        public UserUpdateDto( string login, UserRole role )
+        public UserUpdateDto( string login, string role )
         {
             Login = login;
             Role = role;

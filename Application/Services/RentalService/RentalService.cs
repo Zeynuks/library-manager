@@ -7,8 +7,6 @@ using Domain.Repositories;
 
 namespace Application.Services.RentalService
 {
-    //TODO Добавить логику расчета и отдельный метод предрасчёта
-    //TODO Добавить логику расчёта для штрафов + просрочка
     public class RentalService : IRentalService
     {
         private readonly IRentalRepository _rentalRepository;

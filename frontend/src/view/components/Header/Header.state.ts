@@ -10,6 +10,7 @@ export const useHeaderState = () => {
     const userStore = useAuthUserStore()
     const onLogout = async () => {
         try {
+            navigate('/login');
             await api.post('/account/logout');
             userStore.set({
                 login: undefined,
@@ -17,7 +18,6 @@ export const useHeaderState = () => {
                 isBlocked: false,
             })
             message.success('Вы вышли из системы');
-            navigate('/login');
         } catch {
             message.error('Ошибка при выходе');
         }

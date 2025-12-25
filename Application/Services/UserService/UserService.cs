@@ -1,5 +1,6 @@
 using Application.DTOs;
 using Domain.Entities;
+using Domain.Enums;
 using Domain.Exceptions;
 using Domain.Foundation;
 using Domain.Repositories;
@@ -44,7 +45,12 @@ namespace Application.Services.UserService
 
             string passwordHash = BCrypt.Net.BCrypt.HashPassword( dto.Password );
 
-            User user = new( dto.Login, passwordHash, dto.Role );
+            if (!Enum.TryParse(dto.Role, true, out UserRole role))
+            {
+                throw new ArgumentException($"Invalid role value: {dto.Role}");
+            }
+            
+            User user = new( dto.Login, passwordHash, role );
             _userRepository.Add( user );
             await _unitOfWork.CommitAsync();
 
@@ -58,8 +64,13 @@ namespace Application.Services.UserService
             {
                 throw new DomainNotFoundException( $"User with ID {id} not found." );
             }
+            
+            if (!Enum.TryParse(dto.Role, true, out UserRole role))
+            {
+                throw new ArgumentException($"Invalid role value: {dto.Role}");
+            }
 
-            user.Update( dto.Login, dto.Role );
+            user.Update(dto.Login, role);
             await _unitOfWork.CommitAsync();
         }
 
@@ -106,7 +117,7 @@ namespace Application.Services.UserService
 
         private static UserDto ToDto( User user )
         {
-            return new UserDto( user.Id, user.Login, user.Role, user.IsBlocked );
+            return new UserDto( user.Id, user.Login, user.Role.ToString(), user.IsBlocked );
         }
     }
 }

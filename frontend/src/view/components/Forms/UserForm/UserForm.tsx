@@ -1,6 +1,6 @@
 import { UserFormView } from "./UserForm.view.tsx";
 import { useUserFormState } from "./UserForm.state.ts";
-import type { User } from "@/domain";
+import type { User } from "@/domain/User.ts";
 
 export type UserFormProps = {
     user?: User;

@@ -1,37 +1,39 @@
 import {useState} from "react";
+import {useNavigate} from "react-router-dom";
+import {blockUser, createUser, unblockUser, updateUser} from "@/api";
+import type {User} from "@/domain/User.ts";
 import type {UserFormProps} from "./UserForm.tsx";
-import {blockUser, createUser, unblockUser, updateUser, type UpdateUser} from "@/api";
-
+import type {UserRole} from "@/domain/UserRoles.ts";
 
 export const useUserFormState = ({user}: UserFormProps) => {
+    const roles: UserRole[] = ["Administrator", "Manager", "Operator"];
+    const [blocked, setBlocked] = useState<boolean | undefined>(user?.isBlocked);
     const [disabled, setDisabled] = useState(!!user);
-
-    const save = async (formUser: UpdateUser) => {
+    const navigate = useNavigate();
+    console.log(user)
+    const save = async (formUser: User) => {
         if (user?.id) {
-            await updateUser(formUser);
-
-            if (formUser.isBlocked !== user.isBlocked) {
-                if (formUser.isBlocked) {
-                    await blockUser(user.id);
-                } else {
-                    await unblockUser(user.id);
-                }
+            if (formUser.isBlocked != user.isBlocked) {
+                formUser.isBlocked = !formUser.isBlocked;
             }
-
-            setDisabled(true);
+            await updateUser(user.id, formUser);
         } else {
-            await createUser({
-                login: formUser.login,
-                password: formUser.password!,
-                roleId: formUser.role.id
-            });
+            const savedUser = await createUser(formUser);
+            navigate(`/users/${savedUser.id}`);
         }
+        setDisabled(true);
     };
 
-    return {
-        user,
-        disabled,
-        setDisabled,
-        save
-    };
+    const toggleBlockUser = () => {
+        if (user?.id) {
+            if (blocked) {
+                unblockUser(user?.id);
+            } else {
+                blockUser(user?.id);
+            }
+            setBlocked(!blocked);
+        }
+    }
+
+    return {user, roles, disabled, blocked, setDisabled, toggleBlockUser, save}
 };

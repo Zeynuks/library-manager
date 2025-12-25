@@ -16,7 +16,6 @@ namespace Infrastructure.Repositories
         public async Task<User?> TryGet( int id )
         {
             return await _dbContext.Users
-                .AsNoTracking()
                 .FirstOrDefaultAsync( u => u.Id == id );
         }
 
