@@ -1,0 +1,4 @@
+1,admin,$2a$11$PgPQBaENKz.iScJy7UXmy.Yw5bXdZNhV8WP.pLzHAX2AEg04FEn92,Administrator,0
+2,manager,$2a$11$PgPQBaENKz.iScJy7UXmy.Yw5bXdZNhV8WP.pLzHAX2AEg04FEn92,Manager,0
+3,b_manager,$2a$11$PgPQBaENKz.iScJy7UXmy.Yw5bXdZNhV8WP.pLzHAX2AEg04FEn92,Manager,1
+4,operator,$2a$11$PgPQBaENKz.iScJy7UXmy.Yw5bXdZNhV8WP.pLzHAX2AEg04FEn92,Operator,0
